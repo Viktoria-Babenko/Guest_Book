@@ -40,6 +40,7 @@ namespace Guest_Book.Repository
         public async Task CreateUser(UserModel c)
         {
             await _context.Users.AddAsync(c);
+            await _context.SaveChangesAsync();
         }
         public async Task CreateMessege(MessegesModel c, UserModel u)
         {
