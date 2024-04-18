@@ -58,7 +58,7 @@ namespace Guest_Book.Controllers
         }
 
         [HttpPost]
-        public IActionResult Register(RegisterModel reg)
+        public async Task<IActionResult> Register(RegisterModel reg)
         {
             if (ModelState.IsValid)
             {
@@ -89,8 +89,7 @@ namespace Guest_Book.Controllers
 
                 user.Password = hash.ToString();
                 user.Salt = salt;
-                repo.CreateUser(user);
-                repo.Save();
+                await repo.CreateUser(user);
                 string response = user.FirstName + " " + user.LastName + " " + ", You have successfully registered!";
                 return Json(response);
             }
