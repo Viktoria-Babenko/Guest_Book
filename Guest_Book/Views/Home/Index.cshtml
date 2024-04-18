@@ -95,7 +95,53 @@
                     }
                 });
             });
-            
+            function resetForm() {
+                $("#firstName").val("");
+                $("#lastName").val("");
+                $("#login").val("");
+                $("#password").val("");
+                $("#passwordConfirm").val("");
+                $("#hdn-register-id").css('display', 'none');
+            }
+            function resetMessegesForm() {
+                $("#Messeges").val("");
+            }
+            function getLogin() {
+                $("#hdn-login-id").css('display', 'block');
+                $("#btn-Registration").css('display', 'block');
+                $("#btn-Login").css('display', 'block');
+                $("#btn-Logout").css('display', 'none');
+            }
+            function authorized(User) {
+                $("#login_l").val("");
+                $("#password_l").val("");
+                $("#hdn-login-id").css('display', 'none');
+                $("#hdn-user-id").val(User.Id);
+                let Welcome = "Welcome, " + User.FirstName + " " + User.LastName + "!!!"
+                $("#welcome").text(Welcome);
+                $("#btn-Registration").css('display', 'none');
+                $("#btn-Login").css('display', 'none');
+                $("#btn-Logout").css('display', 'block');
+                $("#Messeges").css('display', 'block');
+            }
+            $("#btn-Login").on("click", function () {
+                $("#hdn-login-id").css('display', 'block');
+                $("#hdn-register-id").css('display', 'none');
+                $("#Messeges").css('display', 'none');
+            });
+            $("#btn-Registration").on("click", function () {
+                $("#hdn-login-id").css('display', 'none');
+                $("#hdn-register-id").css('display', 'block');
+                $("#Messeges").css('display', 'none');
+            });
+            $("#btn-Logout").on("click", function () {
+                $("#btn-Registration").css('display', 'block');
+                $("#btn-Login").css('display', 'block');
+                $("#btn-Logout").css('display', 'none');
+                $("#Messeges").css('display', 'none');
+                $("#welcome").text("");
+                $("#hdn-user-id").html(-1);
+            });
         });
     </script>
     @{
