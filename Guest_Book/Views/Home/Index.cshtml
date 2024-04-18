@@ -1,9 +1,108 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            getAllMesseges();
+            $("#btn-Logout").css('display', 'none');
 
-<div class="row">
+            let row = function (mes) {
+                return "<tr><td>" + mes.MessegeDate + "</td> <td>" + mes.User + "</td>" +
+                    "<td>" + mes.Messeges + "</td></tr> ";
+            };
+            function getAllMesseges() {
+                $.ajax({
+                    url: '@Url.Action("GetMesseges", "Home")',
+                    type: 'GET',
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        let rows = "";
+                        let messege = JSON.parse(response);
+                        $.each(messege, function (index, mes) {
+                            // добавляем полученные элементы в таблицу
+                            rows += row(mes);
+                        })
+                        $("#messege-list").html(rows);
+                    },
+                    error: function (x, y, z) {
+                        alert(x + '\n' + y + '\n' + z);
+                    }
+                });
+            }
 
+            $("#btn-insert-messege").on("click", function () {
+                let formData = new FormData();
+                formData.append("messeges", $("#messeges").val());
+                formData.append("userId", $("#hdn-user-id").val());
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("InsertMesseges", "Home")',
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function (response) {
+                        alert(response);
+                        resetMessegesForm();
+                        getAllMesseges();
+                    },
+                    error: function (x, y, z) {
+                        alert(x + '\n' + y + '\n' + z);
+                    }
+                });
+            });
+            $("#btn-login-user").on("click", function () {
+                let formData = new FormData();
+                formData.append("login", $("#login_l").val());
+                formData.append("password", $("#password_l").val());
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Login", "User")',
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function (response) {
+                        let id = -1;
+                        var User = JSON.parse(response);
+                        authorized(User);
+                    },
+                    error: function (x, y, z) {
+                        alert(x + '\n' + y + '\n' + z);
+                    }
+                });
+            });
+            $("#btn-register-user").on("click", function () {
+                let formData = new FormData();
+                formData.append("firstName", $("#firstName").val());
+                formData.append("lastName", $("#lastName").val());
+                formData.append("login", $("#login").val());
+                formData.append("password", $("#password").val());
+                formData.append("passwordConfirm", $("#passwordConfirm").val());
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Register", "User")',
+                    contentType: false,
+                    processData: false,
+                    data: formData,
+                    success: function (response) {
+                        alert(response);
+                        getLogin();
+                        resetForm();
+                    },
+                    error: function (x, y, z) {
+                        alert(x + '\n' + y + '\n' + z);
+                    }
+                });
+            });
+            
+        });
+    </script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}<div class="row">
+    
     <div class="col-md-4">
         <form id="hdn-login-id" class="none">
             <div class="row g-3">
