@@ -50,8 +50,8 @@ namespace Guest_Book.Controllers
                     messege.User = user;
                     messege.UserId = user.Id;
                     messege.Messeges = mess.Messeges;
-                    repo?.CreateMessege(messege, user);
-                    repo?.Save();
+                    await repo.CreateMessege(messege, user);
+                    await repo.Save();
                     string response = "Message added successfully!";
                     return Json(response);
                 }
