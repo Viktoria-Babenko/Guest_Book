@@ -14,8 +14,7 @@ builder.Services.AddDistributedMemoryCache();// добавляем IDistributedMemoryCach
 builder.Services.AddScoped<IRepository, ReviewsRepository>();
 builder.Services.AddControllersWithViews();
 
-var app = builder.Build();
-app.UseSession();   // Добавляем middleware-компонент для работы с сессиями
+var app = builder.Build(); 
 app.UseStaticFiles(); // обрабатывает запросы к файлам в папке wwwroot
 
 app.MapControllerRoute(

@@ -20,3 +20,40 @@ html {
 body {
   margin-bottom: 60px;
 }
+.div1 {
+    padding: 20px;
+    background-color: bisque;
+}
+
+.header {
+    background-color: burlywood;
+}
+
+
+.block {
+    display: block;
+}
+
+.none {
+    display: none;
+}
+
+.a {
+    color: black;
+    margin: 5px;
+    padding: 15px;
+    border: 1px;
+    border-color: black;
+    border-style: dashed;
+    border-radius: 10px 25px;
+    background-color: chocolate;
+    height: max-content;
+}
+
+td {
+    border: 1px;
+    border-color: black;
+    border-style: solid;
+    text-align: left;
+    vertical-align: top;
+}
